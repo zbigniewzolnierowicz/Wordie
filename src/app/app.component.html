@@ -1,15 +1,18 @@
 <nb-layout>
 
   <nb-layout-header fixed>
-    <h1>Wordie</h1>
-    <nb-actions size="small">
-      <nb-action icon="person-outline" [routerLink]="['/auth','login']"></nb-action>
-      <nb-action icon="book-open-outline" [routerLink]="['/cards']"></nb-action>
-    </nb-actions>
+    Words
   </nb-layout-header>
 
   <nb-layout-column>
-    <router-outlet></router-outlet>
+    <nb-card>
+        <nb-card-body>
+          {{ routes | json }}
+        </nb-card-body>
+      </nb-card>
+  </nb-layout-column>
+  <nb-layout-column>
+    <nb-route-tabset [tabs]="routes"></nb-route-tabset>
   </nb-layout-column>
 
   <nb-layout-footer fixed>
