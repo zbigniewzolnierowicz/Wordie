@@ -4,14 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbCardModule, NbListModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbCardModule, NbListModule, NbActionsModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CardComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +19,8 @@ import { CardComponent } from './components/card/card.component';
     NbLayoutModule,
     NbEvaIconsModule,
     NbCardModule,
-    NbListModule
+    NbListModule,
+    NbActionsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

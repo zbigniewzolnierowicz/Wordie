@@ -2,14 +2,14 @@
 
   <nb-layout-header fixed>
     <h1>Wordie</h1>
+    <nb-actions size="small">
+      <nb-action icon="person-outline" [routerLink]="['/auth','login']"></nb-action>
+      <nb-action icon="book-open-outline" [routerLink]="['/cards']"></nb-action>
+    </nb-actions>
   </nb-layout-header>
 
   <nb-layout-column>
-      <nb-list>
-        <nb-list-item *ngFor="let word of words">
-          <app-card [word]="word"></app-card>
-        </nb-list-item>
-      </nb-list>
+    <router-outlet></router-outlet>
   </nb-layout-column>
 
   <nb-layout-footer fixed>
