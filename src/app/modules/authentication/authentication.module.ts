@@ -6,10 +6,15 @@ import { AuthenticationComponent } from './authentication.component';
 
 import { NbThemeModule, NbLayoutModule, NbCardModule, NbListModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './views/login/login.component';
+import { RegisterComponent } from './views/register/register.component';
 
 @NgModule({
-  declarations: [AuthenticationComponent, LoginComponent],
+  declarations: [
+    AuthenticationComponent,
+    LoginComponent,
+    RegisterComponent
+  ],
   imports: [
     CommonModule,
     AuthenticationRoutingModule,

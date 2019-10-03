@@ -1,18 +1,16 @@
 <nb-layout>
 
   <nb-layout-header fixed>
-    Words
+    <nb-actions size="small">
+      <nb-action icon="menu-outline" (click)="toggleSidebar()"></nb-action>
+    </nb-actions>
   </nb-layout-header>
 
+  <nb-sidebar fixed state="collapsed">
+    <nb-menu [items]="items"></nb-menu>
+  </nb-sidebar>
   <nb-layout-column>
-    <nb-card>
-        <nb-card-body>
-          {{ routes | json }}
-        </nb-card-body>
-      </nb-card>
-  </nb-layout-column>
-  <nb-layout-column>
-    <nb-route-tabset [tabs]="routes"></nb-route-tabset>
+    <router-outlet></router-outlet>
   </nb-layout-column>
 
   <nb-layout-footer fixed>
