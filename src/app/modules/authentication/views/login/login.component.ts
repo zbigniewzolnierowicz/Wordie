@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Observable } from 'rxjs';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
+  loginStatus: Observable<string>;
   status: Observable<string>;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private statusService: StatusService) { }
 
   ngOnInit() {
-    this.status = this.loginService.status;
+    this.loginStatus = this.loginService.status;
+    this.status = this.statusService.statusObservable;
   }
 
   logIn() {
