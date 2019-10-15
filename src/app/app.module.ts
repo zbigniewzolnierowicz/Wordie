@@ -27,6 +27,7 @@ import {
 import {
   NbEvaIconsModule
 } from '@nebular/eva-icons';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import {
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    CookieService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

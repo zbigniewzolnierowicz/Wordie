@@ -1,16 +1,7 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  Word
-} from './interfaces/word';
-import {
-  CardProviderService
-} from './services/card-provider.service';
-import {
-  Router
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Word } from './interfaces/word';
+import { CardProviderService } from './services/card-provider.service';
+import { Router } from '@angular/router';
 import { NbMenuItem, NbMenuService } from '@nebular/theme';
 import { NbSidebarService } from '@nebular/theme';
 
