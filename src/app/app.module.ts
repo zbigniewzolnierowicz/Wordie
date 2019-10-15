@@ -27,7 +27,7 @@ import {
 import {
   NbEvaIconsModule
 } from '@nebular/eva-icons';
-import { CookieService } from 'ngx-cookie-service';
+import { StorageServiceModule } from 'angular-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -46,11 +46,10 @@ import { CookieService } from 'ngx-cookie-service';
     NbListModule,
     NbActionsModule,
     NbSidebarModule.forRoot(),
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
+    StorageServiceModule
   ],
-  providers: [
-    CookieService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

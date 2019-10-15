@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
-import { take } from 'rxjs/operators';
+import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +8,9 @@ import { take } from 'rxjs/operators';
 export class LoginService {
   private loginStatus = new BehaviorSubject<string>('');
 
-  constructor(private cookies: CookieService) {
-    if (this.cookies.get('status')) {
-      this.loginStatus.next(this.cookies.get('status'));
+  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService) {
+    if (this.storage.get('status')) {
+      this.loginStatus.next(this.storage.get('status'));
     } else {
       this.setStatus('loggedOut');
     }
@@ -27,6 +26,6 @@ export class LoginService {
 
   setStatus(status: string) {
     this.loginStatus.next(status);
-    this.cookies.set('status', status);
+    this.storage.set('status', status);
   }
 }
