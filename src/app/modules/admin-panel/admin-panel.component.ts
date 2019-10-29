@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import * as actions from '../cards/actions/card.actions';
 import * as fromCards from '../cards/reducers/card.reducer';
 import { Observable } from 'rxjs';
+import { Word } from 'src/app/interfaces/word';
 
 @Component({
   selector: 'app-admin-panel',
@@ -11,7 +12,11 @@ import { Observable } from 'rxjs';
 })
 export class AdminPanelComponent implements OnInit {
 
-  words: Observable<any>
+  words: Observable<any>;
+  id: number;
+  idToDelete: number;
+  originalWord: string;
+  translation: string;
 
   constructor(private store: Store<fromCards.State>) {}
 
@@ -21,14 +26,18 @@ export class AdminPanelComponent implements OnInit {
 
   addCard() {
     this.store.dispatch(new actions.AddCard({
-      id: 999,
-      originalWord: 'test1',
-      translation: 'test2'
+      id: this.id,
+      originalWord: this.originalWord,
+      translation: this.translation
     }));
   }
 
   removeCard() {
-    this.store.dispatch(new actions.RemoveCard(999));
+    this.store.dispatch(new actions.RemoveCard(this.idToDelete));
+  }
+
+  updateCard(payload: {id: number, payload: Partial<Word>}) {
+    this.store.dispatch(new actions.ModifyCard(payload.id, payload.payload));
   }
 
 }
