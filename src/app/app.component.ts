@@ -43,6 +43,11 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       ]
     },
+    {
+      title: 'Admin',
+      icon: 'settings-2',
+      link: 'admin'
+    }
   ];
 
   constructor(

@@ -20,7 +20,8 @@ const routes: Routes = [
   {
     path: 'cards',
     loadChildren: () => import('./modules/cards/cards.module').then(m => m.CardsModule)
-  }
+  },
+  { path: 'admin', loadChildren: () => import('./modules/admin-panel/admin-panel.module').then(m => m.AdminPanelModule) }
 ];
 
 @NgModule({
