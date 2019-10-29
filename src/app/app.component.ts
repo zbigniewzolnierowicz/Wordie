@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { NbMenuItem, NbMenuService } from '@nebular/theme';
 import { NbSidebarService } from '@nebular/theme';
 import { StatusService } from './services/status.service';
+import { Store } from '@ngrx/store';
+import * as actions from 'src/app/modules/cards/actions/card.actions';
+import * as fromCards from 'src/app/modules/cards/reducers/card.reducer';
 
 @Component({
   selector: 'app-root',
@@ -47,7 +50,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public router: Router,
     public sidebarService: NbSidebarService,
     public menuService: NbMenuService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private store: Store<fromCards.State>
     ) {}
 
     @HostListener('window:beforeunload', ['$event'])
@@ -63,6 +67,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.menuService.onItemClick().subscribe(() => {
       this.sidebarService.collapse();
     });
+    const initialState = [
+      {
+        id: 0,
+        originalWord: 'compiler',
+        translation: 'kompilator'
+      },
+      {
+        id: 1,
+        originalWord: 'graphics card',
+        translation: 'karta graficzna'
+      }
+    ];
+    initialState.forEach(word => this.store.dispatch(new actions.AddCard(word)));
   }
 
   toggleSidebar() {

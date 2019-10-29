@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CardProviderService } from 'src/app/services/card-provider.service';
-import { Word } from 'src/app/interfaces/word';
+// import { CardProviderService } from 'src/app/services/card-provider.service';
+// import { Word } from 'src/app/interfaces/word';
+import * as actions from './actions/card.actions';
+import * as fromCards from './reducers/card.reducer';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cards',
@@ -8,12 +12,17 @@ import { Word } from 'src/app/interfaces/word';
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
-  words: Word[];
+  words: Observable<any>;
 
-  constructor(private cpS: CardProviderService) { }
+  constructor(private store: Store<fromCards.State>) { }
 
   ngOnInit() {
-    this.words = this.cpS.availableWords;
+    this.words = this.store.select(fromCards.selectAll);
+    this.store.dispatch(new actions.AddCard({
+      id: 0,
+      originalWord: 'test1',
+      translation: 'test2'
+    }));
   }
 
 }

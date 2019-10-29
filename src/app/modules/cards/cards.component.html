@@ -1,5 +1,5 @@
 <nb-list>
-  <nb-list-item *ngFor="let word of words">
+  <nb-list-item *ngFor="let word of words | async">
     <app-card [word]="word"></app-card>
   </nb-list-item>
 </nb-list>
