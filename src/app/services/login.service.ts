@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { NbToastrService } from '@nebular/theme';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
 export class LoginService {
   private loginStatus = new BehaviorSubject<string>('');
 
-  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService) {
+  constructor(@Inject(SESSION_STORAGE) private storage: WebStorageService, private toast: NbToastrService) {
     if (this.storage.get('status')) {
       this.loginStatus.next(this.storage.get('status'));
     } else {
@@ -25,7 +26,12 @@ export class LoginService {
   }
 
   setStatus(status: string) {
-    this.loginStatus.next(status);
-    this.storage.set('status', status);
+    if (this.currentStatus !== status) {
+      this.loginStatus.next(status);
+      this.toast.show(status, 'Performed log-in action', {
+        icon: 'person'
+      });
+      this.storage.set('status', status);
+    }
   }
 }

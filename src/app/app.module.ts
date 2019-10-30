@@ -1,37 +1,16 @@
-import {
-  BrowserModule
-} from '@angular/platform-browser';
-import {
-  NgModule
-} from '@angular/core';
-
-import {
-  AppRoutingModule
-} from './app-routing.module';
-import {
-  AppComponent
-} from './app.component';
-import {
-  BrowserAnimationsModule
-} from '@angular/platform-browser/animations';
-
-import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbCardModule,
-  NbListModule,
-  NbActionsModule,
-  NbSidebarModule,
-  NbMenuModule
-} from '@nebular/theme';
-import {
-  NbEvaIconsModule
-} from '@nebular/eva-icons';
-import { StorageServiceModule } from 'angular-webstorage-service';
+// tslint:disable: max-line-length
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbActionsModule, NbCardModule, NbContextMenuModule, NbGlobalPhysicalPosition, NbLayoutModule, NbListModule, NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbUserModule } from '@nebular/theme';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StorageServiceModule } from 'angular-webstorage-service';
 import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { metaReducers, reducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -59,7 +38,10 @@ import { environment } from '../environments/environment';
         strictActionImmutability: true
       }
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    NbToastrModule.forRoot({ destroyByClick: true, position: NbGlobalPhysicalPosition.BOTTOM_RIGHT }),
+    NbUserModule,
+    NbContextMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

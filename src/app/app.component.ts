@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject } from '@angular/core';
 import { Word } from './interfaces/word';
 import { CardProviderService } from './services/card-provider.service';
 import { Router } from '@angular/router';
-import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbMenuItem, NbMenuService, NB_WINDOW } from '@nebular/theme';
 import { NbSidebarService } from '@nebular/theme';
 import { StatusService } from './services/status.service';
 import { Store } from '@ngrx/store';
 import * as actions from 'src/app/modules/cards/actions/card.actions';
 import * as fromCards from 'src/app/modules/cards/reducers/card.reducer';
+import { filter, map } from 'rxjs/operators';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -49,6 +51,14 @@ export class AppComponent implements OnInit, OnDestroy {
       link: 'admin'
     }
   ];
+  things: object[] = [
+    {
+      title: 'Profile'
+    },
+    {
+      title: 'Log out'
+    }
+  ];
 
   constructor(
     private cardService: CardProviderService,
@@ -56,7 +66,10 @@ export class AppComponent implements OnInit, OnDestroy {
     public sidebarService: NbSidebarService,
     public menuService: NbMenuService,
     private statusService: StatusService,
-    private store: Store<fromCards.State>
+    private store: Store<fromCards.State>,
+    private nbMenuService: NbMenuService,
+    public logInService: LoginService,
+    @Inject(NB_WINDOW) private window
     ) {}
 
     @HostListener('window:beforeunload', ['$event'])
@@ -85,6 +98,20 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     ];
     initialState.forEach(word => this.store.dispatch(new actions.AddCard(word)));
+    this.nbMenuService.onItemClick()
+    .pipe(
+      filter(({ tag }) => tag === 'profile-menu'),
+      map(({ item: { title } }) => title),
+    )
+    .subscribe(title => {
+      switch (title) {
+        case 'Log out':
+          this.logInService.setStatus('loggedOut');
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   toggleSidebar() {

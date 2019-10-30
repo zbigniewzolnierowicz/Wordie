@@ -1,9 +1,10 @@
 <nb-layout>
 
-  <nb-layout-header fixed>
+  <nb-layout-header fixed class="header">
     <nb-actions size="small">
       <nb-action icon="menu-outline" (click)="toggleSidebar()"></nb-action>
     </nb-actions>
+    <nb-user name="Adam Jensen" title="Student" [nbContextMenu]="things" nbContextMenuTag="profile-menu" *ngIf="logInService.currentStatus === 'loggedIn'"></nb-user>
   </nb-layout-header>
 
   <nb-sidebar fixed state="collapsed">
