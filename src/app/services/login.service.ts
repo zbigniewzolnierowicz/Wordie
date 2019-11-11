@@ -26,12 +26,18 @@ export class LoginService {
   }
 
   setStatus(status: string) {
-    if (this.currentStatus !== status) {
-      this.loginStatus.next(status);
-      this.toast.show(status, 'Performed log-in action', {
-        icon: 'person'
-      });
-      this.storage.set('status', status);
-    }
+    return new Promise((resolve, reject) => {
+      if (this.currentStatus !== status) {
+        this.loginStatus.next(status);
+        this.storage.set('status', status);
+        if (this.currentStatus === status) {
+          resolve(this.currentStatus);
+        } else {
+          reject('Did not update.');
+        }
+      } else {
+        reject('Already logged in.');
+      }
+    });
   }
 }
