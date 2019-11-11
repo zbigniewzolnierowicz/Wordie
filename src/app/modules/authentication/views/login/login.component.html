@@ -1,3 +1,13 @@
-<p>login works!</p>
-<p>{{ status | async }}</p>
-<button (click)="logIn()">Simulate being logged in</button>
+<nb-card>
+    <nb-card-body>
+        <form [formGroup]="loginData" (submit)="login()">
+            <div class="form-control-group">
+                <input type="text" nbInput fullWidth fieldSize="small" placeholder="Username" formControlName="username">
+            </div>
+            <div class="form-control-group">
+                <input type="password" nbInput fullWidth fieldSize="small" placeholder="Password" formControlName="password">
+            </div>
+            <button nbButton type="submit">Log in</button>
+        </form>
+    </nb-card-body>
+</nb-card>

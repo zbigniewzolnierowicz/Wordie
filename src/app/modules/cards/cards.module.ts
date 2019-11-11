@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CardsRoutingModule } from './cards-routing.module';
 import { CardsComponent } from './cards.component';
 import { CardComponent } from './components/card/card.component';
-import { NbThemeModule, NbLayoutModule, NbCardModule, NbListModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbCardModule, NbListModule, NbActionsModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 
@@ -20,7 +20,9 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbLayoutModule,
     NbEvaIconsModule,
     NbCardModule,
-    NbListModule
+    NbListModule,
+    NbActionsModule,
+    NbLayoutModule
   ]
 })
 export class CardsModule { }

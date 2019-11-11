@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as actions from './actions/card.actions';
 import * as fromCards from './reducers/card.reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { LearningStatus } from 'src/app/enums/learning-status.enum';
+import { Word } from 'src/app/interfaces/word';
 
 @Component({
   selector: 'app-cards',
@@ -16,11 +18,10 @@ export class CardsComponent implements OnInit {
 
   ngOnInit() {
     this.words = this.store.select(fromCards.selectAll);
-    this.store.dispatch(new actions.AddCard({
-      id: 0,
-      originalWord: 'test1',
-      translation: 'test2'
-    }));
+  }
+
+  handleCardChangeStatus(event: { id: number, payload: Partial<Word> }) {
+    this.store.dispatch(new actions.ModifyCard(event.id, event.payload));
   }
 
 }

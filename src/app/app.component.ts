@@ -12,6 +12,7 @@ import { filter, map } from 'rxjs/operators';
 import { LoginService } from './services/login.service';
 import { Observable } from 'rxjs';
 import { UserRoles } from './enums/user-roles.enum';
+import { LearningStatus } from './enums/learning-status.enum';
 
 @Component({
   selector: 'app-root',
@@ -101,16 +102,18 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
       this.menuService.onItemClick().subscribe(() => {
         this.sidebarService.collapse();
       });
-      const initialState = [
+      const initialState: Word[] = [
         {
           id: 0,
           originalWord: 'compiler',
-          translation: 'kompilator'
+          translation: 'kompilator',
+          isLearned: LearningStatus.UNKNOWN
         },
         {
           id: 1,
           originalWord: 'graphics card',
-          translation: 'karta graficzna'
+          translation: 'karta graficzna',
+          isLearned: LearningStatus.UNKNOWN
         }
       ];
       initialState.forEach(word => this.store.dispatch(new actions.AddCard(word)));

@@ -2,21 +2,37 @@
     <nb-card-front>
       <nb-card>
         <nb-card-header>
-          <h3>Słowo</h3>
+          <h3>Word</h3>
+          <h5>Word status: {{ word.isLearned }}</h5>
         </nb-card-header>
         <nb-card-body>
           {{ word.originalWord }}
         </nb-card-body>
+        <nb-card-footer>
+          <nb-actions size="small">
+            <nb-action icon="eye-off-2-outline" (click)="setCardStatus('unknown')" [disabled]="word.isLearned === 'UNKNOWN'"></nb-action>
+            <nb-action icon="eye-outline" (click)="setCardStatus('learned')" [disabled]="word.isLearned === 'LEARNED'"></nb-action>
+            <nb-action icon="award-outline" (click)="setCardStatus('mastered')" [disabled]="word.isLearned === 'MASTERED'"></nb-action>
+          </nb-actions>
+        </nb-card-footer>
       </nb-card>
     </nb-card-front>
     <nb-card-back>
       <nb-card>
         <nb-card-header>
-          <h3>Tłumaczenie</h3>
+          <h3>Translation</h3>
+          <h5>Word status: {{ word.isLearned }}</h5>
         </nb-card-header>
         <nb-card-body>
           {{ word.translation }}
         </nb-card-body>
+        <nb-card-footer>
+          <nb-actions size="small">
+            <nb-action icon="eye-off-2-outline"></nb-action>
+            <nb-action icon="eye-outline"></nb-action>
+            <nb-action icon="award-outline"></nb-action>
+          </nb-actions>
+        </nb-card-footer>
       </nb-card>
     </nb-card-back>
   </nb-flip-card>
