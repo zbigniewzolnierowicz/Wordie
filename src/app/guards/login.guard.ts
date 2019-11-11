@@ -13,17 +13,29 @@ import {
 import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 import { LoginStatus } from '../enums/login-status.enum';
+import { NbToastrService } from '@nebular/theme';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private login: LoginService, private router: Router) {}
+  constructor(private login: LoginService, private router: Router, private toast: NbToastrService) {}
 
-  isLoggedIn() {
-    if (this.login.status === LoginStatus.LOGGED_IN) { return true; }
-    this.router.navigate(['auth', 'login']);
-    return false;
+  async isLoggedIn() {
+    try {
+      if (this.login.status === LoginStatus.LOGGED_IN) {
+        return true;
+      } else {
+        throw new Error('Already logged in.');
+      }
+    } catch (e) {
+      this.router.navigate(['auth', 'login']);
+      this.toast.show(e, 'Error!', {
+        icon: 'close-outline',
+        status: 'danger'
+      });
+      return false;
+    }
   }
 
   canActivate(
