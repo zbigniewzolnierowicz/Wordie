@@ -23,7 +23,7 @@ export class AdminGuard implements CanActivate, CanActivateChild, CanLoad {
   isAdmin() {
     try {
       if (this.login.loggedInAccountRole === UserRoles.USER) {
-        throw new Error('User is not an admin!');
+        throw new Error('You are not an administrator.');
       }
       if (this.login.loggedInAccountRole === UserRoles.ADMIN) {
         return true;

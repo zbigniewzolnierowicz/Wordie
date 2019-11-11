@@ -26,7 +26,7 @@ export class LoginGuard implements CanActivate, CanActivateChild, CanLoad {
       if (this.login.status === LoginStatus.LOGGED_IN) {
         return true;
       } else {
-        throw new Error('Already logged in.');
+        throw new Error('You are not logged in.');
       }
     } catch (e) {
       this.router.navigate(['auth', 'login']);
