@@ -1,13 +1,5 @@
-<ul>
-    <li *ngFor="let word of words | async">
-        <p>{{ word | json }}</p>
-        <app-card-admin [word]="word" (updateWord)="updateCard($event)"></app-card-admin>
-    </li>
-</ul>
-<p>
-    <input type="number" [(ngModel)]="id">
-    <input type="text" [(ngModel)]="originalWord">
-    <input type="text" [(ngModel)]="translation">
-    <button type="button" (click)="addCard()">Submit</button>
-</p>
-<input type="number" [(ngModel)]="idToDelete" value="0" min="0"><button (click)="removeCard()">Remove this card</button>
+<nb-list *ngIf="words$ | async as words">
+    <nb-list-item *ngFor="let word of words">
+        <app-card-admin [word]="word" (deleteWord)="removeCard($event)" (updateWord)="updateCard($event)"></app-card-admin>
+    </nb-list-item>
+</nb-list>

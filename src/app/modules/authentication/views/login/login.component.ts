@@ -22,21 +22,33 @@ export class LoginComponent implements OnInit {
   }
 
   logIn() {
-    this.loginService.setStatus('loggedIn')
-      .then(status => {
-        this.toast.show(status, `Succesfully logged in!`, {
-          icon: 'person',
-          status: 'success'
-        });
-      })
-      .catch(err => {
-        this.toast.show(err, `Performed log-in action: ${status}`, {
-          icon: 'person',
-          status: 'danger'
-        });
+    this.loginService.logIn('user', 'user')
+    .then(status => {
+      this.toast.show(status, `Succesfully logged out!`, {
+        icon: 'person',
+        status: 'success'
       });
+    })
+    .catch(err => {
+      this.toast.show(err, `Log out error!`, {
+        icon: 'person',
+        status: 'danger'
+      });
+    });
   }
   logOut() {
-    this.loginService.setStatus('loggedOut');
+    this.loginService.setStatus('loggedOut')
+    .then(status => {
+      this.toast.show(status, `Succesfully logged out!`, {
+        icon: 'person',
+        status: 'success'
+      });
+    })
+    .catch(err => {
+      this.toast.show(err, `Log out error!`, {
+        icon: 'person',
+        status: 'danger'
+      });
+    });
   }
 }

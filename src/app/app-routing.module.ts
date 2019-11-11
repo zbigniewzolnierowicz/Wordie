@@ -5,6 +5,8 @@ import {
   Routes,
   RouterModule
 } from '@angular/router';
+import { LoginGuard } from './guards/login.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
@@ -19,9 +21,14 @@ const routes: Routes = [
   },
   {
     path: 'cards',
+    canActivate: [LoginGuard],
     loadChildren: () => import('./modules/cards/cards.module').then(m => m.CardsModule)
   },
-  { path: 'admin', loadChildren: () => import('./modules/admin-panel/admin-panel.module').then(m => m.AdminPanelModule) }
+  {
+    path: 'admin',
+    canActivate: [AdminGuard, LoginGuard],
+    loadChildren: () => import('./modules/admin-panel/admin-panel.module').then(m => m.AdminPanelModule)
+  }
 ];
 
 @NgModule({

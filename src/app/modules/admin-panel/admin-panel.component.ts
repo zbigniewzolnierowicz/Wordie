@@ -12,7 +12,7 @@ import { Word } from 'src/app/interfaces/word';
 })
 export class AdminPanelComponent implements OnInit {
 
-  words: Observable<any>;
+  words$: Observable<Word[]>;
   id: number;
   idToDelete: number;
   originalWord: string;
@@ -21,7 +21,7 @@ export class AdminPanelComponent implements OnInit {
   constructor(private store: Store<fromCards.State>) {}
 
   ngOnInit() {
-    this.words = this.store.select(fromCards.selectAll);
+    this.words$ = this.store.select(fromCards.selectAll);
   }
 
   addCard() {
@@ -32,8 +32,8 @@ export class AdminPanelComponent implements OnInit {
     }));
   }
 
-  removeCard() {
-    this.store.dispatch(new actions.RemoveCard(this.idToDelete));
+  removeCard(payload: { id: number }) {
+    this.store.dispatch(new actions.RemoveCard(payload.id));
   }
 
   updateCard(payload: {id: number, payload: Partial<Word>}) {

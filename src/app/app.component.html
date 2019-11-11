@@ -4,7 +4,9 @@
     <nb-actions size="small">
       <nb-action icon="menu-outline" (click)="toggleSidebar()"></nb-action>
     </nb-actions>
-    <nb-user name="Adam Jensen" title="Student" [nbContextMenu]="things" nbContextMenuTag="profile-menu" *ngIf="logInService.currentStatus === 'loggedIn'"></nb-user>
+    <ng-container *ngIf="userData$ | async as userData">
+      <nb-user [name]="userData.username" *ngIf="userData.username !== undefined" [title]="userData.role" [nbContextMenu]="things" nbContextMenuTag="profile-menu"></nb-user>
+    </ng-container>
   </nb-layout-header>
 
   <nb-sidebar fixed state="collapsed">

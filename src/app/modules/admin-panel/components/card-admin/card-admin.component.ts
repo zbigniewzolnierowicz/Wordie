@@ -9,16 +9,20 @@ import { Word } from 'src/app/interfaces/word';
 export class CardAdminComponent implements OnInit {
   @Input() word: Word;
   @Output() updateWord = new EventEmitter<{ id: number, payload: Partial<Word> }>();
+  @Output() deleteWord = new EventEmitter<{ id: number }>();
   translation: string;
   originalWord: string;
+  editing = false;
 
   constructor() { }
 
   ngOnInit() {
     this.translation = this.word.translation;
     this.originalWord = this.word.originalWord;
+    console.log(this.word);
   }
-  onSubmit() {
+
+  submit() {
     this.updateWord.emit({
       id: this.word.id,
       payload: {
@@ -26,6 +30,20 @@ export class CardAdminComponent implements OnInit {
         originalWord: this.originalWord
       }
     });
+  }
+
+  formReset() {
+    this.translation = this.word.translation;
+    this.originalWord = this.word.originalWord;
+    this.toggleEdit();
+  }
+
+  toggleEdit() {
+    this.editing = !this.editing;
+  }
+
+  delete() {
+    this.deleteWord.emit({ id: this.word.id });
   }
 
 }

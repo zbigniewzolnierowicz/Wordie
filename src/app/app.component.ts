@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, AfterContentInit } from '@angular/core';
 import { Word } from './interfaces/word';
 import { CardProviderService } from './services/card-provider.service';
 import { Router } from '@angular/router';
@@ -10,15 +10,17 @@ import * as actions from 'src/app/modules/cards/actions/card.actions';
 import * as fromCards from 'src/app/modules/cards/reducers/card.reducer';
 import { filter, map } from 'rxjs/operators';
 import { LoginService } from './services/login.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
   title = 'Wordie';
   words: Word[];
+  userData$: Observable<{id?: string, username?: string, password?: string, role?: string}> = this.logInService.loggedInAccountData;
   items: NbMenuItem[] = [
     {
       title: 'Home',
@@ -60,6 +62,19 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   ];
 
+  roles = [
+    {
+      id: 'admin',
+      name: 'Administrator'
+    },
+    {
+      id: 'user',
+      name: 'Student'
+    }
+  ];
+
+  userRole: string;
+
   constructor(
     private cardService: CardProviderService,
     public router: Router,
@@ -81,37 +96,41 @@ export class AppComponent implements OnInit, OnDestroy {
       this.statusService.setStatus(document.visibilityState === 'visible' ? 'active' : 'inactive');
     }
     ngOnInit() {
-    this.words = this.cardService.availableWords;
-    this.menuService.onItemClick().subscribe(() => {
-      this.sidebarService.collapse();
-    });
-    const initialState = [
-      {
-        id: 0,
-        originalWord: 'compiler',
-        translation: 'kompilator'
-      },
-      {
-        id: 1,
-        originalWord: 'graphics card',
-        translation: 'karta graficzna'
-      }
-    ];
-    initialState.forEach(word => this.store.dispatch(new actions.AddCard(word)));
-    this.nbMenuService.onItemClick()
-    .pipe(
-      filter(({ tag }) => tag === 'profile-menu'),
-      map(({ item: { title } }) => title),
-    )
-    .subscribe(title => {
-      switch (title) {
-        case 'Log out':
-          this.logInService.setStatus('loggedOut');
-          break;
-        default:
-          break;
-      }
-    });
+      this.words = this.cardService.availableWords;
+      this.menuService.onItemClick().subscribe(() => {
+        this.sidebarService.collapse();
+      });
+      const initialState = [
+        {
+          id: 0,
+          originalWord: 'compiler',
+          translation: 'kompilator'
+        },
+        {
+          id: 1,
+          originalWord: 'graphics card',
+          translation: 'karta graficzna'
+        }
+      ];
+      initialState.forEach(word => this.store.dispatch(new actions.AddCard(word)));
+      this.nbMenuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'profile-menu'),
+        map(({ item: { title } }) => title),
+      )
+      .subscribe(title => {
+        switch (title) {
+          case 'Log out':
+            this.logInService.logOut();
+            this.router.navigate(['auth', 'login']);
+            break;
+          default:
+            break;
+        }
+      });
+    }
+  ngAfterContentInit() {
+    this.userData$.subscribe(data => console.log(data));
   }
 
   toggleSidebar() {

@@ -1,1 +1,28 @@
-<p><input type="text" [(ngModel)]="originalWord"><input type="text" [(ngModel)]="translation"><button (click)="onSubmit()">Edit</button></p>
+<nb-card>
+    <nb-card-header>{{ originalWord }} - {{ translation }}</nb-card-header>
+    <nb-card-body>
+        <ng-container *ngIf="!editing">
+            {{ word.originalWord }} - {{ word.translation }}
+        </ng-container>
+        <ng-container *ngIf="editing">
+            <div class="form-control-group">
+                <label class="label" for="original-word">Original word:</label><br/>
+                <input type="text" nbInput [(ngModel)]="originalWord" name="original-word">
+            </div>
+            <div class="form-control-group">
+                <label class="label" for="translation">Translation:</label><br/>
+                <input type="text" nbInput [(ngModel)]="translation" name="translation">
+            </div>
+            <nb-actions size="small">
+                <nb-action icon="checkmark-outline" (click)="submit()"></nb-action>
+                <nb-action icon="close-outline" (click)="formReset()"></nb-action>
+            </nb-actions>
+        </ng-container>
+    </nb-card-body>
+    <nb-card-footer>
+        <nb-actions size="small">
+            <nb-action icon="edit-2-outline" (click)="toggleEdit()"></nb-action>
+            <nb-action icon="trash-2-outline" (click)="delete()"></nb-action>
+        </nb-actions>
+    </nb-card-footer>
+</nb-card>
