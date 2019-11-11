@@ -11,6 +11,7 @@ import * as fromCards from 'src/app/modules/cards/reducers/card.reducer';
 import { filter, map } from 'rxjs/operators';
 import { LoginService } from './services/login.service';
 import { Observable } from 'rxjs';
+import { UserRoles } from './enums/user-roles.enum';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
   title = 'Wordie';
   words: Word[];
-  userData$: Observable<{id?: string, username?: string, password?: string, role?: string}> = this.logInService.loggedInAccountData;
+  userData$: Observable<{id?: string, username?: string, password?: string, role?: string}> = this.logInService.loggedInAccountData$;
   items: NbMenuItem[] = [
     {
       title: 'Home',
@@ -65,11 +66,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
   roles = [
     {
       id: 'admin',
-      name: 'Administrator'
+      name: UserRoles.ADMIN
     },
     {
       id: 'user',
-      name: 'Student'
+      name: UserRoles.USER
     }
   ];
 
