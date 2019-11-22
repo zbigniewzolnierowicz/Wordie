@@ -28,7 +28,8 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [AdminGuard, LoginGuard],
     loadChildren: () => import('./modules/admin-panel/admin-panel.module').then(m => m.AdminPanelModule)
-  }
+  },
+  { path: 'user', loadChildren: () => import('./modules/user-panel/user-panel.module').then(m => m.UserPanelModule) }
 ];
 
 @NgModule({
