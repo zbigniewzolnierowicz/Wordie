@@ -12,7 +12,7 @@ import { Word } from 'src/app/interfaces/word';
   styleUrls: ['./cards.component.scss']
 })
 export class CardsComponent implements OnInit {
-  words: Observable<any>;
+  words: Observable<Word[]>;
 
   constructor(private store: Store<fromCards.State>) { }
 

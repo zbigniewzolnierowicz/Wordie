@@ -1,1 +1,20 @@
-<p>user-panel works!</p>
+
+
+<nb-layout>
+    <nb-layout-column>
+        <nb-card>
+            <nb-card-body>
+                <p>You don't know {{ stats.unknown }} words.</p>
+                <p>You know {{ stats.learned }} words.</p>
+                <p>You mastered {{ stats.mastered }} words.</p>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+    <nb-layout-column>
+        <nb-list>
+            <nb-list-item *ngFor="let word of words$ | async">
+                <app-user-card [word]="word"></app-user-card>
+            </nb-list-item>
+        </nb-list>
+    </nb-layout-column>
+</nb-layout>

@@ -35,6 +35,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
       link: 'cards'
     },
     {
+      title: 'Admin',
+      icon: 'settings-2',
+      link: 'admin'
+    },
+    {
+      title: 'User',
+      icon: 'settings-2',
+      link: 'user'
+    },
+    {
       title: 'Authentication',
       children: [
         {
@@ -48,11 +58,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
           link: 'auth/register'
         }
       ]
-    },
-    {
-      title: 'Admin',
-      icon: 'settings-2',
-      link: 'admin'
     }
   ];
   things: object[] = [
@@ -86,8 +91,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
     private store: Store<fromCards.State>,
     private nbMenuService: NbMenuService,
     public logInService: LoginService,
-    @Inject(NB_WINDOW) private window
-    ) {}
+  ) {}
 
     @HostListener('window:beforeunload', ['$event'])
     beforeunloadHandler() {
@@ -134,7 +138,27 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
       });
     }
   ngAfterContentInit() {
-    this.userData$.subscribe(data => console.log(data));
+    this.userData$.subscribe(data => {
+      switch (data.role) {
+        case UserRoles.USER:
+          this.items[this.items.findIndex(item => item.title === 'Admin')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'User')].hidden = false;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].children.map(item => item.hidden = true);
+          break;
+        case UserRoles.ADMIN:
+          this.items[this.items.findIndex(item => item.title === 'Admin')].hidden = false;
+          this.items[this.items.findIndex(item => item.title === 'User')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].children.map(item => item.hidden = true);
+          break;
+        default:
+          this.items[this.items.findIndex(item => item.title === 'Admin')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'User')].hidden = true;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].hidden = false;
+          this.items[this.items.findIndex(item => item.title === 'Authentication')].children.map(item => item.hidden = false);
+      }
+    });
   }
 
   toggleSidebar() {
