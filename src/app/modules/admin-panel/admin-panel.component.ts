@@ -4,6 +4,7 @@ import * as actions from '../cards/actions/card.actions';
 import * as fromCards from '../cards/reducers/card.reducer';
 import { Observable } from 'rxjs';
 import { Word } from 'src/app/interfaces/word';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,22 +14,29 @@ import { Word } from 'src/app/interfaces/word';
 export class AdminPanelComponent implements OnInit {
 
   words$: Observable<Word[]>;
-  id: number;
-  idToDelete: number;
   originalWord: string;
   translation: string;
+  newId: number;
+
+  newWord = new FormGroup({
+    originalWord: new FormControl(''),
+    translation: new FormControl('')
+  });
 
   constructor(private store: Store<fromCards.State>) {}
 
   ngOnInit() {
     this.words$ = this.store.select(fromCards.selectAll);
+    this.words$.subscribe(words => {
+      this.newId = words.length;
+    });
   }
 
   addCard() {
     this.store.dispatch(new actions.AddCard({
-      id: this.id,
-      originalWord: this.originalWord,
-      translation: this.translation
+      id: this.newId,
+      originalWord: this.newWord.get('originalWord').value,
+      translation: this.newWord.get('translation').value
     }));
   }
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UserPanelRoutingModule } from './user-panel-routing.module';
 import { UserPanelComponent } from './user-panel.component';
-import { NbListModule, NbCardModule, NbLayoutModule } from '@nebular/theme';
+import { NbListModule, NbCardModule, NbLayoutModule, NbActionsModule, NbPopoverModule } from '@nebular/theme';
 import { UserPanelCardComponent } from './components/card/card.component';
 
 
@@ -17,7 +17,9 @@ import { UserPanelCardComponent } from './components/card/card.component';
     UserPanelRoutingModule,
     NbListModule,
     NbCardModule,
-    NbLayoutModule
+    NbLayoutModule,
+    NbActionsModule,
+    NbPopoverModule
   ]
 })
 export class UserPanelModule { }

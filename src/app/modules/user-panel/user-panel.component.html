@@ -8,9 +8,14 @@
                 <p>You know {{ stats.learned }} words.</p>
                 <p>You mastered {{ stats.mastered }} words.</p>
             </nb-card-body>
+            <nb-card-footer>
+                <nb-actions size="medium">
+                    <nb-action icon="eye-off-2-outline" (click)="setAllAs('unknown')" nbPopover="Set all as unknown" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
+                    <nb-action icon="eye-outline" (click)="setAllAs('learned')" nbPopover="Set all as learned" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
+                    <nb-action icon="award-outline" (click)="setAllAs('mastered')" nbPopover="Set all as mastered" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
+                </nb-actions>
+            </nb-card-footer>
         </nb-card>
-    </nb-layout-column>
-    <nb-layout-column>
         <nb-list>
             <nb-list-item *ngFor="let word of words$ | async">
                 <app-user-card [word]="word"></app-user-card>

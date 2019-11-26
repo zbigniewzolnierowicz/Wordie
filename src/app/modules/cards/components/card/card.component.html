@@ -10,9 +10,9 @@
         </nb-card-body>
         <nb-card-footer>
           <nb-actions size="small">
-            <nb-action icon="eye-off-2-outline" (click)="setCardStatus('unknown')" [disabled]="word.isLearned === 'UNKNOWN'"></nb-action>
-            <nb-action icon="eye-outline" (click)="setCardStatus('learned')" [disabled]="word.isLearned === 'LEARNED'"></nb-action>
-            <nb-action icon="award-outline" (click)="setCardStatus('mastered')" [disabled]="word.isLearned === 'MASTERED'"></nb-action>
+            <nb-action icon="eye-off-2-outline" (click)="setCardStatus('unknown')" [disabled]="word.isLearned === 'UNKNOWN'" nbPopover="Set as unknown" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
+            <nb-action icon="eye-outline" (click)="setCardStatus('learned')" [disabled]="word.isLearned === 'LEARNED'" nbPopover="Set as known" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
+            <nb-action icon="award-outline" (click)="setCardStatus('mastered')" [disabled]="word.isLearned === 'MASTERED'" nbPopover="Set as mastered" nbPopoverTrigger="hint" nbPopoverPlacement="top"></nb-action>
           </nb-actions>
         </nb-card-footer>
       </nb-card>

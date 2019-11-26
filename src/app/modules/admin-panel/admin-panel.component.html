@@ -1,3 +1,12 @@
+<nb-card>
+    <nb-card-body>
+        <form (ngSubmit)="addCard()" [formGroup]="newWord">
+            <input type="text" fullWidth nbInput placeholder="Original word" formControlName="originalWord">
+            <input type="text" fullWidth nbInput placeholder="Translated word" formControlName="translation">
+            <button nbButton type="submit">Add a new word</button>
+        </form>
+    </nb-card-body>
+</nb-card>
 <nb-list *ngIf="words$ | async as words">
     <nb-list-item *ngFor="let word of words">
         <app-card-admin [word]="word" (deleteWord)="removeCard($event)" (updateWord)="updateCard($event)"></app-card-admin>

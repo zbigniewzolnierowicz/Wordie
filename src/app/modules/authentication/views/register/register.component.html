@@ -1,1 +1,9 @@
-<p>register works!</p>
+<nb-card>
+    <nb-card-body>
+        <form (ngSubmit)="addUser()" [formGroup]="newUser">
+            <input type="text" fullWidth nbInput placeholder="Username" formControlName="username">
+            <input type="password" fullWidth nbInput placeholder="Password" formControlName="password">
+            <button nbButton type="submit">Register</button>
+        </form>
+    </nb-card-body>
+</nb-card>

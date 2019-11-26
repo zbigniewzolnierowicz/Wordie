@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Word } from 'src/app/interfaces/word';
 import { Observable } from 'rxjs';
 import { LearningStatus } from 'src/app/enums/learning-status.enum';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-panel',
@@ -30,6 +31,29 @@ export class UserPanelComponent implements OnInit {
         unknown: unknownWords.length,
         mastered: masteredWords.length
       };
+    });
+  }
+
+  setAllAs(payload: string) {
+    let status: LearningStatus;
+    switch (payload) {
+      case 'unknown':
+        status = LearningStatus.UNKNOWN;
+        break;
+      case 'learned':
+        status = LearningStatus.LEARNED;
+        break;
+      case 'mastered':
+        status = LearningStatus.MASTERED;
+        break;
+      default:
+        status = LearningStatus.UNKNOWN;
+        break;
+    }
+    this.words$.pipe(take(1)).toPromise().then(words => {
+      words.forEach(word => {
+        this.store.dispatch(new actions.ModifyCard(word.id, { isLearned: status }));
+      });
     });
   }
 
